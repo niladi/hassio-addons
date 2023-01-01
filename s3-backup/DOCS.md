@@ -4,10 +4,9 @@
 
 Follow these steps to get the add-on installed on your system:
 
-1. Enable **Advanced Mode** in your Home Assistant user profile.
-2. Navigate in your Home Assistant frontend to **Supervisor** -> **Add-on Store**.
-3. Search for "Amazon S3 Backup" add-on and click on it.
-4. Click on the "INSTALL" button.
+1. Navigate in your Home Assistant frontend to **Add-Ons** **Add-on Store**.
+2. Search for "S3 Backup" add-on and click on it.
+3. Click on the "INSTALL" button.
 
 ## How to use
 
@@ -62,22 +61,25 @@ local_backups_to_keep: 3
 ```
 
 ### Option: `aws_access_key` (required)
-AWS IAM access key used to access the S3 bucket.
+access key used to access the S3 bucket.
 
 ### Option: `aws_secret_access_key` (required)
-AWS IAM secret access key used to access the S3 bucket.
+secret access key used to access the S3 bucket.
 
 ### Option: `bucket_name` (required)
-Amazon S3 bucket used to store backups.
+S3 bucket used to store backups.
 
-### Option: `bucket_region` (optional, Default: eu-central-1)
-AWS region where the S3 bucket was created. See https://aws.amazon.com/about-aws/global-infrastructure/ for all available regions.
+### Option: `endpoint_urls` (optional, Default: https://eu2.contabostorage.com)
+S3 bucket used to store backups.
+
+### Option: `bucket_region` (optional, Default: eu2)
+The Region of the s3 bucket.
 
 ### Option: `storage_class` (optional, Default: STANDARD)
-Amazon S3 storage class to use for the synced objects, when uploading files to S3. One of STANDARD, REDUCED_REDUNDANCY, STANDARD_IA, ONEZONE_IA, INTELLIGENT_TIERING, GLACIER, DEEP_ARCHIVE. For more information see https://aws.amazon.com/s3/storage-classes/.
+S3 storage class to use for the synced objects, when uploading files to S3. One of STANDARD, REDUCED_REDUNDANCY, STANDARD_IA, ONEZONE_IA, INTELLIGENT_TIERING, GLACIER, DEEP_ARCHIVE. For more information see https://aws.amazon.com/s3/storage-classes/.
 
 ### Option: `delete_local_backups` (optional, Default: true)
-Should the addon remove oldest local backups after syncing to your Amazon S3 Bucket? You can configure how many local backups you want to keep with the Option `local_backups_to_keep`. Oldest Backups will get deleted first.
+Should the addon remove oldest local backups after syncing to your S3 Bucket? You can configure how many local backups you want to keep with the Option `local_backups_to_keep`. Oldest Backups will get deleted first.
 
 ### Option: `local_backups_to_keep` (optional, Default: 3)
 How many backups you want to keep locally? If you want to disable automatic local cleanup, set `delete_local_backups` to false.
