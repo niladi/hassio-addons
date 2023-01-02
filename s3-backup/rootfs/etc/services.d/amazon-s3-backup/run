@@ -20,9 +20,9 @@ export AWS_SECRET_ACCESS_KEY="$(bashio::config 'aws_secret_access_key')"
 export AWS_REGION="$bucket_region"
 
 bashio::log.debug "Using AWS CLI version: '$(aws --version)'"
-bashio::log.debug "Command: 'aws --endpoint-url $endpoint_url --region $bucket_region s3 sync $monitor_path --bucket $bucket_name --no-progress --storage-class $storage_class'"
+bashio::log.debug "Command: 'aws --endpoint-url $endpoint_url --region $bucket_region s3 sync $monitor_path s3://$bucket_name --no-progress --storage-class $storage_class'"
 
-aws --endpoint-url $endpoint_url --region $bucket_region s3 sync $monitor_path --bucket $bucket_name --no-progress --storage-class $storage_class
+aws --endpoint-url $endpoint_url --region $bucket_region s3 sync $monitor_path s3://$bucket_name --no-progress --storage-class $storage_class
 
 if bashio::var.true "${delete_local_backups}"; then
     bashio::log.info "Will delete all the oldest local backups except the '${local_backups_to_keep}' newest ones."
