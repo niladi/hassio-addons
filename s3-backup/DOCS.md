@@ -72,7 +72,7 @@ S3 bucket used to store backups.
 ### Option: `endpoint_urls` (optional, Default: https://eu2.contabostorage.com)
 S3 bucket used to store backups.
 
-### Option: `bucket_region` (optional, Default: eu2)
+### Option: `bucket_region` (optional, Default: default)
 The Region of the s3 bucket.
 
 ### Option: `storage_class` (optional, Default: STANDARD)
