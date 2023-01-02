@@ -1,6 +1,15 @@
 # Changelog
 
+## 1.0.3
+
+- CLI fixes
+
+## 1.0.2
+
+- CLI fixes
+
 ## 1.0.1
+
 - Some doc fixes
 
 ## 1.0.0
