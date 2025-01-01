@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0
+
+- Adding Monthly and Daily Update Logic
+
+## 1.0.4
+
+- CLI fixes
+
 ## 1.0.3
 
 - CLI fixes

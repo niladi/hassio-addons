@@ -1,0 +1,36 @@
+{
+  "name": "Niladi Home Assistant add-on repository",
+  "image": "ghcr.io/home-assistant/devcontainer:addons",
+  "runArgs": [
+    "--hostname=Hassio-Addons",
+    "--name=vsc-hassio-addons",
+    "-e",
+    "GIT_EDITOR=code --wait",
+    "--privileged"
+  ],
+  "appPort": [
+    "7123:8123",
+    "7357:4357"
+  ],
+  "postStartCommand": "bash devcontainer_bootstrap",
+  "containerEnv": {
+    "WORKSPACE_DIRECTORY": "${containerWorkspaceFolder}"
+  },
+  "mounts": [
+    "type=volume,target=/var/lib/docker"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "files.trimTrailingWhitespace": true,
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      },
+      "extensions": [
+        "timonwong.shellcheck",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
