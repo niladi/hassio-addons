@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Dockerfile fix
+
 ## 2.0.0
 
 - Adding Monthly and Daily Update Logic

@@ -5,12 +5,18 @@ ENV LANG C.UTF-8
 
 COPY rootfs /
 
-# add aws-cli and deps
-RUN apk add -v --update --no-cache \
+# Install dependencies and AWS CLI
+RUN apk add --no-cache \
         python3 \
         py3-pip \
         groff \
         less \
         jq \
-        && \
-    pip3 install --upgrade awscli
+        libffi-dev \
+        openssl-dev \
+        build-base \
+    && \
+    python3 -m ensurepip --upgrade && \
+    pip3 install --no-cache-dir --upgrade pip && \
+    pip3 install --no-cache-dir awscli && \
+    apk del build-base libffi-dev openssl-dev
