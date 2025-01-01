@@ -15,8 +15,10 @@ RUN apk add --no-cache \
         libffi-dev \
         openssl-dev \
         build-base \
-    && \
-    python3 -m ensurepip --upgrade && \
+        py3-pip \
+        py3-paho-mqtt \
+
+RUN python3 -m ensurepip --upgrade && \
     pip3 install --no-cache-dir --upgrade pip && \
     pip3 install --no-cache-dir awscli && \
     apk del build-base libffi-dev openssl-dev
