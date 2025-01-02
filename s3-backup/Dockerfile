@@ -3,9 +3,6 @@ FROM ${BUILD_FROM}
 
 ENV LANG C.UTF-8
 
-# Copy root filesystem
-COPY rootfs /
-
 # Install dependencies
 RUN apk add --no-cache \
     coreutils \
@@ -23,6 +20,9 @@ RUN apk add --no-cache \
     pip install --no-cache-dir --upgrade pip awscli && \
     deactivate && \
     apk del build-base libffi-dev openssl-dev
+
+# Copy root filesystem
+COPY rootfs /
 
 # Adjust PATH to include virtual environment
 ENV PATH="/opt/venv/bin:$PATH"
