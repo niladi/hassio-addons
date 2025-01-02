@@ -8,6 +8,7 @@ COPY rootfs /
 
 # Install dependencies
 RUN apk add --no-cache \
+    coreutils \
     python3 \
     py3-pip \
     groff \
