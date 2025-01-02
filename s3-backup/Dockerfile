@@ -3,8 +3,10 @@ FROM ${BUILD_FROM}
 
 ENV LANG C.UTF-8
 
+# Copy root filesystem
 COPY rootfs /
-# Instal
+
+# Install dependencies
 RUN apk add --no-cache \
     python3 \
     py3-pip \
@@ -15,8 +17,12 @@ RUN apk add --no-cache \
     openssl-dev \
     build-base \
     py3-paho-mqtt && \
-    python3 -m ensurepip --upgrade && \
-    pip3 install --no-cache-dir --upgrade pip && \
-    pip3 install --no-cache-dir awscli && \
+    python3 -m venv /opt/venv && \
+    . /opt/venv/bin/activate && \
+    pip install --no-cache-dir --upgrade pip awscli && \
+    deactivate && \
     apk del build-base libffi-dev openssl-dev
+
+# Adjust PATH to include virtual environment
+ENV PATH="/opt/venv/bin:$PATH"
 

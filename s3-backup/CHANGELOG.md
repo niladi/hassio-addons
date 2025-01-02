@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- Dockerfile fix
+
 ## 2.0.3
 
 - Repo fix

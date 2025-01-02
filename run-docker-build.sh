@@ -1,5 +1,5 @@
 #!/bin/bash
-ARCH=amd64
+ARCH=aarch64
 cd s3-backup || exit
 docker build \
   --build-arg BUILD_FROM="homeassistant/$ARCH-base:latest" \
