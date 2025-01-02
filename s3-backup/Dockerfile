@@ -4,7 +4,7 @@ FROM ${BUILD_FROM}
 ENV LANG C.UTF-8
 
 COPY rootfs /
-
+# Instal
 RUN apk add --no-cache \
     python3 \
     py3-pip \
