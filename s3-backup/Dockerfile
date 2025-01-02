@@ -5,7 +5,6 @@ ENV LANG C.UTF-8
 
 COPY rootfs /
 
-# Install dependencies and AWS CLI
 RUN apk add --no-cache \
     python3 \
     py3-pip \
