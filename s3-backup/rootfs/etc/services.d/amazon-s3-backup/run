@@ -12,7 +12,7 @@ bucket_region="$(bashio::config 'bucket_region' 'eu2')"
 endpoint_url="$(bashio::config 'endpoint_urls' 'https://eu2.contabostorage.com')"
 delete_local_backups="$(bashio::config 'delete_local_backups' 'true')"
 local_backups_to_keep="$(bashio::config 'local_backups_to_keep' '3')"
-monitor_path="/backup"
+
 jq_filter=".backups|=sort_by(.date)|.backups|reverse|.[$local_backups_to_keep:]|.[].slug"
 
 export AWS_ACCESS_KEY_ID="$(bashio::config 'aws_access_key')"
@@ -28,9 +28,9 @@ s3_daily_path="s3://$bucket_name/daily/$daily_folder"
 s3_monthly_path="s3://$bucket_name/monthly/$monthly_folder"
 
 # Find files created today
-today_files=$(find "$monitor_path" -type f -newermt "$(date +%Y-%m-%d)")
+today_files=$(find /backup -type f -newermt "$(date +%Y-%m-%d)" ! -newermt "$(date -d tomorrow +%Y-%m-%d)")
 if [ -z "$today_files" ]; then
-    bashio::log.error "No files found for today's date in $monitor_path"
+    bashio::log.error "No files found for today's date in /backup"
 fi
 
 # Sync daily backups
