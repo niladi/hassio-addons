@@ -1,3 +1,8 @@
 #!/usr/bin/with-contenv bashio
-# Cleanup logic (if any)
-bashio::log.info "Finished Amazon S3 Backup."
+# ==============================================================================
+# Home Assistant Community Add-on: Amazon S3 Backup
+# ==============================================================================
+bashio::log.info "Finishing Amazon S3 Backup..."
+s6-svscanctl -t /var/run/service
+bashio::log.info "Finishing Amazon S3 Backup... Done!"
+
