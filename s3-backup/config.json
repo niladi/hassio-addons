@@ -6,6 +6,7 @@
     "url": "https://github.com/niladi/hassio-addons/tree/main/s3-backup",
     "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
     "boot": "manual",
+    "init": false,
     "startup": "once",
     "advanced": true,
     "hassio_api": true,
