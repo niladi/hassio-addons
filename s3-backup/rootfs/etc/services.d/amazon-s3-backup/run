@@ -52,16 +52,19 @@ fi
 
 # Delete backups older than 30 days in the daily folder
 bashio::log.info "Removing backups older than 30 days in the daily folder"
+cutoff_date=$(date -d "$(date +%Y-%m-%d) -30 days" +%Y-%m-%d)
 aws --endpoint-url "$endpoint_url" --region "$bucket_region" s3 ls "s3://$bucket_name/daily/" | while read -r line; do
     folder_date=$(echo "$line" | awk '{print $2}' | sed 's#/##')
     folder_date_seconds=$(date -d "$folder_date" +%s 2>/dev/null || true)
-    cutoff_date_seconds=$(date -d "30 days ago" +%s)
+    cutoff_date_seconds=$(date -d "$cutoff_date" +%s)
 
     if [[ -n "$folder_date_seconds" && "$folder_date_seconds" -lt "$cutoff_date_seconds" ]]; then
         bashio::log.info "Deleting old daily folder: $folder_date"
         aws --endpoint-url "$endpoint_url" --region "$bucket_region" s3 rm --recursive "s3://$bucket_name/daily/$folder_date"
     fi
 done
+
+
 
 # Optionally delete old local backups
 if bashio::var.true "${delete_local_backups}"; then
