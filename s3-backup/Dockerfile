@@ -27,3 +27,4 @@ RUN apk add --no-cache \
 # Adjust PATH to include virtual environment
 ENV PATH="/opt/venv/bin:$PATH"
 
+ENTRYPOINT ["/init"]
