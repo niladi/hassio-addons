@@ -27,8 +27,8 @@ monthly_folder="$(date +%Y-%m)"
 s3_daily_path="s3://$bucket_name/daily/$daily_folder"
 s3_monthly_path="s3://$bucket_name/monthly/$monthly_folder"
 
-# Find files created today
-today_files=$(find /backup -type f -newermt "$(date +%Y-%m-%d)" ! -newermt "$(date -d tomorrow +%Y-%m-%d)")
+# Find files modified in the last 24 hours
+today_files=$(find /backup -type f -mtime -1)
 if [ -z "$today_files" ]; then
     bashio::log.error "No files found for today's date in /backup"
 fi
