@@ -27,15 +27,25 @@ monthly_folder="$(date +%Y-%m)"
 s3_daily_path="s3://$bucket_name/daily/$daily_folder"
 s3_monthly_path="s3://$bucket_name/monthly/$monthly_folder"
 
+# Find files created today
+today_files=$(find "$monitor_path" -type f -newermt "$(date +%Y-%m-%d)")
+if [ -z "$today_files" ]; then
+    bashio::log.error "No files found for today's date in $monitor_path"
+fi
+
 # Sync daily backups
 bashio::log.info "Syncing daily backups to: $s3_daily_path"
-aws --endpoint-url "$endpoint_url" --region "$bucket_region" s3 sync "$monitor_path" "$s3_daily_path" --no-progress --storage-class "$storage_class"
+for file in $today_files; do
+    aws --endpoint-url "$endpoint_url" --region "$bucket_region" s3 cp "$file" "$s3_daily_path/$(basename "$file")" --no-progress --storage-class "$storage_class"
+done
 
 # Check if a backup for the current month exists
 bashio::log.info "Checking if monthly backup for $monthly_folder exists"
 if ! aws --endpoint-url "$endpoint_url" --region "$bucket_region" s3 ls "s3://$bucket_name/monthly/" | grep -q "$monthly_folder/"; then
     bashio::log.info "No backup found for this month. Creating monthly backup at: $s3_monthly_path"
-    aws --endpoint-url "$endpoint_url" --region "$bucket_region" s3 sync "$monitor_path" "$s3_monthly_path" --no-progress --storage-class "$storage_class"
+    for file in $today_files; do
+        aws --endpoint-url "$endpoint_url" --region "$bucket_region" s3 cp "$file" "$s3_monthly_path/$(basename "$file")" --no-progress --storage-class "$storage_class"
+    done
 else
     bashio::log.info "Monthly backup for $monthly_folder already exists. Skipping upload."
 fi
@@ -56,7 +66,7 @@ done
 # Optionally delete old local backups
 if bashio::var.true "${delete_local_backups}"; then
     bashio::log.info "Will delete all the oldest local backups except the '${local_backups_to_keep}' newest ones."
-    backup_slugs="$(bashio::api.supervisor "GET" "/backups" "false" $jq_filter)"
+    backup_slugs="$(bashio::api.supervisor "GET" "/backups" "false" "$jq_filter")"
     bashio::log.debug "Backups to delete: '$backup_slugs'"
 
     for s in $backup_slugs; do

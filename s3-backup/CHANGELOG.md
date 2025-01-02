@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.5
+
+- Upload only todays BackUP
+
 ## 2.0.4
 
 - Dockerfile fix
